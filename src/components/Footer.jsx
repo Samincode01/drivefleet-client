@@ -114,7 +114,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-6 text-center text-gray-500">
-          © 2025 DriveFleet. All rights reserved.
+          © 2026 DriveFleet. All rights reserved.
         </div>
       </div>
     </footer>
