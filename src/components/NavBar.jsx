@@ -5,7 +5,7 @@ import { FaCarSide } from "react-icons/fa";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-[#050816]/95 backdrop-blur-md border-b border-white/10">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
