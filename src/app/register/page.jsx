@@ -1,11 +1,60 @@
+"use client";
+
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const image = formData.get("image");
+    const password = formData.get("password");
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+    if (!regex.test(password)) {
+      toast.error(
+        "Password must contain uppercase, lowercase and be at least 6 characters."
+      );
+      return;
+    }
+
+    try {
+      const { error } = await authClient.signUp.email({
+        email,
+        password,
+        name,
+        image,
+      });
+
+      if (error) {
+        toast.error(error.message || "Registration Failed");
+        return;
+      }
+
+      toast.success("Registration Successful");
+
+      e.target.reset();
+
+      router.replace("/login");
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+    }
+  };
+
   return (
     <section className="min-h-screen bg-[#050816] flex items-center justify-center px-6 py-20">
       <div className="max-w-6xl w-full grid lg:grid-cols-2 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-lg">
-
         {/* Left Side */}
         <div
           className="hidden lg:flex flex-col justify-end p-10 min-h-[750px] bg-cover bg-center relative"
@@ -62,7 +111,7 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <form className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name */}
             <div>
               <label className="block text-gray-300 mb-2">
@@ -70,8 +119,10 @@ export default function RegisterPage() {
               </label>
 
               <input
+                name="name"
                 type="text"
                 placeholder="Enter your name"
+                required
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-amber-400"
               />
             </div>
@@ -83,8 +134,10 @@ export default function RegisterPage() {
               </label>
 
               <input
+                name="email"
                 type="email"
                 placeholder="Enter your email"
+                required
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-amber-400"
               />
             </div>
@@ -96,6 +149,7 @@ export default function RegisterPage() {
               </label>
 
               <input
+                name="image"
                 type="text"
                 placeholder="Paste your photo URL"
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-amber-400"
@@ -109,8 +163,10 @@ export default function RegisterPage() {
               </label>
 
               <input
+                name="password"
                 type="password"
                 placeholder="Create password"
+                required
                 className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-amber-400"
               />
 
@@ -119,7 +175,6 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            {/* Register Button */}
             <button
               type="submit"
               className="w-full py-4 rounded-xl bg-amber-400 text-black font-semibold hover:bg-amber-500 transition"
@@ -127,14 +182,12 @@ export default function RegisterPage() {
               Create Account
             </button>
 
-            {/* Divider */}
             <div className="flex items-center gap-4">
               <div className="h-px flex-1 bg-white/10"></div>
               <span className="text-gray-400 text-sm">OR</span>
               <div className="h-px flex-1 bg-white/10"></div>
             </div>
 
-            {/* Google */}
             <button
               type="button"
               className="w-full py-4 rounded-xl border border-white/10 text-white flex items-center justify-center gap-3 hover:border-amber-400 transition"

@@ -1,33 +1,81 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
 const AddCarPage = () => {
+  const router = useRouter();
+
+  const { data: session } = authClient.useSession();
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (!session?.user) {
+      toast.error("Please login first");
+      router.push("/login");
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
-    const carData = Object.fromEntries(formData.entries());
+
+    const carData = Object.fromEntries(
+      formData.entries()
+    );
 
     carData.dailyRent = Number(carData.dailyRent);
     carData.seatCapacity = Number(carData.seatCapacity);
     carData.bookingCount = 0;
 
-    console.log(carData);
+    carData.ownerEmail = session.user.email;
+    carData.ownerName = session.user.name;
 
-    const res = await fetch ('http://localhost:5000/cars',
+    try {
+      new URL(carData.image);
+    } catch {
+      toast.error(
+        "Please enter a valid image URL"
+      );
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        "http://localhost:5000/cars",
         {
-            method: "POST",
-            headers:{
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(carData)
+          method: "POST",
+          headers: {
+            "content-type":
+              "application/json",
+          },
+          body: JSON.stringify(carData),
         }
-    )
-    const data = await res.json
-    console.log(data)
-    // TODO:
-    // axios.post("/cars", carData)
-    // toast.success("Car Added Successfully")
-    // e.target.reset()
+      );
+
+      const data = await res.json();
+
+      if (data.insertedId) {
+        toast.success(
+          "Vehicle Added Successfully"
+        );
+
+        e.target.reset();
+
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      } else {
+        toast.error(
+          "Failed to Add Vehicle"
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        "Something went wrong"
+      );
+    }
   };
 
   return (
@@ -43,8 +91,10 @@ const AddCarPage = () => {
           </h1>
 
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            List your vehicle and start earning by connecting with
-            customers looking for reliable and premium rental services.
+            List your vehicle and start
+            earning by connecting with
+            customers looking for reliable
+            and premium rental services.
           </p>
         </div>
 
@@ -95,11 +145,21 @@ const AddCarPage = () => {
                   required
                   className="w-full px-5 py-4 rounded-xl bg-[#0F172A] border border-white/10 text-white outline-none focus:border-amber-400"
                 >
-                  <option value="">Select Type</option>
-                  <option value="SUV">SUV</option>
-                  <option value="Sedan">Sedan</option>
-                  <option value="Luxury">Luxury</option>
-                  <option value="Hatchback">Hatchback</option>
+                  <option value="">
+                    Select Type
+                  </option>
+                  <option value="SUV">
+                    SUV
+                  </option>
+                  <option value="Sedan">
+                    Sedan
+                  </option>
+                  <option value="Luxury">
+                    Luxury
+                  </option>
+                  <option value="Hatchback">
+                    Hatchback
+                  </option>
                   <option value="Convertible">
                     Convertible
                   </option>
@@ -128,7 +188,7 @@ const AddCarPage = () => {
                 </label>
 
                 <input
-                  type="text"
+                  type="url"
                   name="image"
                   placeholder="https://..."
                   required
@@ -165,6 +225,7 @@ const AddCarPage = () => {
                   <option value="Available">
                     Available
                   </option>
+
                   <option value="Unavailable">
                     Unavailable
                   </option>

@@ -1,17 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
 import AddedCarsCard from "@/components/AddedCarsCard/page";
 
 const MyAddedCarsPage = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { data: session } = authClient.useSession();
+
   useEffect(() => {
     const getCars = async () => {
+      if (!session?.user?.email) return;
+
       try {
         const res = await fetch(
-          "http://localhost:5000/my-added-cars"
+          `http://localhost:5000/my-added-cars/${session.user.email}`
         );
 
         const data = await res.json();
@@ -25,7 +30,7 @@ const MyAddedCarsPage = () => {
     };
 
     getCars();
-  }, []);
+  }, [session]);
 
   if (loading) {
     return (
@@ -49,7 +54,8 @@ const MyAddedCarsPage = () => {
           </h1>
 
           <p className="text-gray-400 max-w-2xl mx-auto">
-            View, update, and manage all vehicles you've listed on DriveFleet.
+            View, update, and manage all vehicles you've listed on
+            DriveFleet.
           </p>
         </div>
 
@@ -60,6 +66,8 @@ const MyAddedCarsPage = () => {
               <AddedCarsCard
                 key={car._id}
                 car={car}
+                cars={cars}
+                setCars={setCars}
               />
             ))}
           </div>
