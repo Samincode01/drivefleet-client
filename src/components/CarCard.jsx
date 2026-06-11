@@ -63,7 +63,7 @@ const CarCard = ({ car }) => {
 
           <Link
             href={`/cars/${car._id}`}
-            className="px-5 py-3 rounded-xl bg-amber-400 text-black font-semibold hover:bg-amber-500 transition"
+            className="px-5 py-3 rounded-xl bg-amber-400 text-black font-semibold hover:bg-amber-500 transition cursor-pointer"
           >
             View Details
           </Link>
