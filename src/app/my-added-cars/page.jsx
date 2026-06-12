@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import AddedCarsCard from "@/components/AddedCarsCard/page";
+import AddedCarsCard from "@/app/components/AddedCarsCard/page";
 
 const MyAddedCarsPage = () => {
   const [cars, setCars] = useState([]);

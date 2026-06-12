@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FaCarSide, FaCalendarCheck } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
-import BookCarModal from "@/components/BookCarModal/page";
+import BookCarModal from "@/app/components/BookCarModal/page";
 const CarDetailsPage = async ({ params }) => {
   const { id } = await params;
 

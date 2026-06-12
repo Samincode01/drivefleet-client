@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CarCard from "@/components/CarCard";
+import CarCard from "@/app/components/CarCard";
 
 const ExploreCarsPage = () => {
   const [cars, setCars] = useState([]);

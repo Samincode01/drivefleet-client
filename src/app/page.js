@@ -1,7 +1,7 @@
-import WhyChoose from "@/components/ChooseSection/ChooseSection";
-import Hero from "@/components/HeroSection/HeroSection";
-import Navbar from "@/components/NavBar";
-import CustomerReviews from "@/components/ReviewSection/ReviewSection";
+import WhyChoose from "@/app/components/ChooseSection/ChooseSection";
+import Hero from "@/app/components/HeroSection/HeroSection";
+import Navbar from "@/app/components/NavBar";
+import CustomerReviews from "@/app/components/ReviewSection/ReviewSection";
 import Image from "next/image";
 
 export default function Home() {

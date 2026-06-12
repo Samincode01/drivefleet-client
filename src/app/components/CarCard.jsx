@@ -10,8 +10,14 @@ const CarCard = ({ car }) => {
       {/* Car Image */}
       <div className="relative w-full h-60">
         <Image
-          src={car.image}
-          alt={car.carName}
+          src={
+            car?.image &&
+            typeof car.image === "string" &&
+            car.image.startsWith("http")
+              ? car.image
+              : "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop"
+          }
+          alt={car?.carName || "Car"}
           fill
           className="object-cover"
         />
@@ -25,6 +31,13 @@ const CarCard = ({ car }) => {
             }`}
           >
             {car.availability}
+          </span>
+        </div>
+
+        {/* Booking Count Badge */}
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-amber-400 text-black">
+            {car.bookingCount || 0} Bookings
           </span>
         </div>
       </div>
@@ -54,7 +67,9 @@ const CarCard = ({ car }) => {
 
         <div className="border-t border-white/10 pt-5 flex items-center justify-between">
           <div>
-            <p className="text-gray-500 text-sm">Daily Rent</p>
+            <p className="text-gray-500 text-sm">
+              Daily Rent
+            </p>
 
             <h3 className="text-2xl font-bold text-amber-400">
               ${car.dailyRent}
