@@ -1,20 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import {
-  usePathname,
-  useRouter,
-} from "next/navigation";
-import {
-  FaCarSide,
-  FaUserCircle,
-} from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { FaCarSide, FaUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { authClient } from "@/lib/auth-client";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -51,7 +51,7 @@ export default function Navbar() {
       ? "text-amber-400 font-semibold"
       : "text-white hover:text-amber-400 transition duration-300";
 
-  if (isPending) return null;
+  if (!mounted || isPending) return null;
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/20 border-b border-white/10">
