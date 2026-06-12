@@ -52,6 +52,12 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleSignin = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
+
   return (
     <section className="min-h-screen bg-[#050816] flex items-center justify-center px-6 py-20">
       <div className="max-w-6xl w-full grid lg:grid-cols-2 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-lg">
@@ -189,8 +195,9 @@ export default function RegisterPage() {
             </div>
 
             <button
+              onClick={handleGoogleSignin}
               type="button"
-              className="w-full py-4 rounded-xl border border-white/10 text-white flex items-center justify-center gap-3 hover:border-amber-400 transition"
+              className="w-full py-4 rounded-xl border border-white/10 text-white flex items-center justify-center gap-3 hover:border-amber-400 transition cursor-pointer"
             >
               <FaGoogle />
               Continue with Google
