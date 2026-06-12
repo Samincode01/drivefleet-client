@@ -3,7 +3,20 @@ import { FaCarSide, FaCalendarCheck } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import BookCarModal from "@/app/components/BookCarModal/page";
+
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
 const CarDetailsPage = async ({ params }) => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
   const { id } = await params;
 
   const res = await fetch(
