@@ -237,108 +237,131 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {mobileOpen && (
-          <div className="md:hidden py-5 border-t border-white/10 bg-[#0B1120]">
-            <div className="flex flex-col gap-4">
-              <Link
-                href="/"
-                onClick={() =>
-                  setMobileOpen(
-                    false
-                  )
-                }
-                className={navLinkClass(
-                  "/"
-                )}
-              >
-                Home
-              </Link>
+       {mobileOpen && (
+  <div className="md:hidden mt-4">
+    <div className="rounded-3xl border border-white/10 bg-[#0B1120]/95 backdrop-blur-xl overflow-hidden shadow-2xl">
+      <div className="flex flex-col p-4">
+        <Link
+          href="/"
+          onClick={() =>
+            setMobileOpen(false)
+          }
+          className={`px-4 py-4 rounded-2xl transition ${
+            pathname === "/"
+              ? "bg-amber-400/10 text-amber-400"
+              : "text-white hover:bg-white/5"
+          }`}
+        >
+          Home
+        </Link>
 
-              <Link
-                href="/explore-cars"
-                onClick={() =>
-                  setMobileOpen(
-                    false
-                  )
-                }
-                className={navLinkClass(
-                  "/explore-cars"
-                )}
-              >
-                Explore Cars
-              </Link>
+        <Link
+          href="/explore-cars"
+          onClick={() =>
+            setMobileOpen(false)
+          }
+          className={`px-4 py-4 rounded-2xl transition ${
+            pathname ===
+            "/explore-cars"
+              ? "bg-amber-400/10 text-amber-400"
+              : "text-white hover:bg-white/5"
+          }`}
+        >
+          Explore Cars
+        </Link>
 
-              <Link
-                href={
-                  session?.user
-                    ? "/add-car"
-                    : "/login"
-                }
-                onClick={() =>
-                  setMobileOpen(
-                    false
-                  )
-                }
-                className="text-white"
-              >
-                Add Car
-              </Link>
+        <Link
+          href={
+            session?.user
+              ? "/add-car"
+              : "/login"
+          }
+          onClick={() =>
+            setMobileOpen(false)
+          }
+          className={`px-4 py-4 rounded-2xl transition ${
+            pathname === "/add-car"
+              ? "bg-amber-400/10 text-amber-400"
+              : "text-white hover:bg-white/5"
+          }`}
+        >
+          Add Car
+        </Link>
 
-              <Link
-                href={
-                  session?.user
-                    ? "/my-bookings"
-                    : "/login"
-                }
-                onClick={() =>
-                  setMobileOpen(
-                    false
-                  )
-                }
-                className="text-white"
-              >
-                My Bookings
-              </Link>
+        <Link
+          href={
+            session?.user
+              ? "/my-bookings"
+              : "/login"
+          }
+          onClick={() =>
+            setMobileOpen(false)
+          }
+          className={`px-4 py-4 rounded-2xl transition ${
+            pathname ===
+            "/my-bookings"
+              ? "bg-amber-400/10 text-amber-400"
+              : "text-white hover:bg-white/5"
+          }`}
+        >
+          My Bookings
+        </Link>
 
-              {session?.user ? (
-                <>
-                  <Link
-                    href="/my-added-cars"
-                    onClick={() =>
-                      setMobileOpen(
-                        false
-                      )
-                    }
-                    className="text-white"
-                  >
-                    My Added Cars
-                  </Link>
-
-                  <button
-                    onClick={
-                      handleLogout
-                    }
-                    className="text-left text-red-400"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <Link
-                  href="/login"
-                  onClick={() =>
-                    setMobileOpen(
-                      false
-                    )
-                  }
-                  className="text-amber-400"
-                >
-                  Login
-                </Link>
-              )}
-            </div>
-          </div>
+        {session?.user && (
+          <Link
+            href="/my-added-cars"
+            onClick={() =>
+              setMobileOpen(false)
+            }
+            className={`px-4 py-4 rounded-2xl transition ${
+              pathname ===
+              "/my-added-cars"
+                ? "bg-amber-400/10 text-amber-400"
+                : "text-white hover:bg-white/5"
+            }`}
+          >
+            My Added Cars
+          </Link>
         )}
+
+        <div className="border-t border-white/10 mt-3 pt-3">
+          {session?.user ? (
+            <>
+              <div className="px-4 py-3">
+                <p className="text-white font-medium">
+                  {session.user.name}
+                </p>
+
+                <p className="text-gray-400 text-sm truncate">
+                  {session.user.email}
+                </p>
+              </div>
+
+              <button
+                onClick={
+                  handleLogout
+                }
+                className="w-full text-left px-4 py-4 rounded-2xl text-red-400 hover:bg-red-500/10 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+              className="block px-4 py-4 rounded-2xl bg-amber-400 text-black font-semibold text-center hover:bg-amber-500 transition"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
       </div>
     </header>
   );
