@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CarCard from "@/app/components/CarCard";
+import { authClient } from "@/lib/auth-client";
 
 const ExploreCarsPage = () => {
   const [cars, setCars] = useState([]);
@@ -24,8 +25,18 @@ const ExploreCarsPage = () => {
           params.append("type", carType);
         }
 
+        const session = await authClient.getSession();
+
+        const token =
+          session?.data?.session?.token;
+console.log("TOKEN:", token);
         const res = await fetch(
-          `http://localhost:5000/cars?${params.toString()}`
+          `http://localhost:5000/cars?${params.toString()}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
         const data = await res.json();
