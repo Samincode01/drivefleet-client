@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import CarCard from "@/app/components/CarCard";
 import { authClient } from "@/lib/auth-client";
+import { Spinner } from "@heroui/react";
 
 const ExploreCarsPage = () => {
   const [cars, setCars] = useState([]);
@@ -105,8 +106,8 @@ console.log("TOKEN:", token);
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <span className="loading loading-spinner loading-lg text-amber-400"></span>
-          </div>
+    <Spinner size="lg" />
+  </div>
         ) : cars.length > 0 ? (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
