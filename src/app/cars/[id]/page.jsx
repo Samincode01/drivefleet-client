@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FaCarSide, FaCalendarCheck } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
-import BookCarModal from "@/app/components/BookCarModal/page";
+import BookCarModal from "@/components/BookCarModal/page";
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -20,7 +20,7 @@ const CarDetailsPage = async ({ params }) => {
   const { id } = await params;
 
   const res = await fetch(
-    `http://localhost:5000/cars/${id}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`,
     {
       cache: "no-store",
     }

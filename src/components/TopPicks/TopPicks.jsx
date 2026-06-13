@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import CarCard from "@/app/components/CarCard";
+import CarCard from "@/components/CarCard";
 import { authClient } from "@/lib/auth-client";
 
 const TopPicks = () => {
@@ -19,7 +19,7 @@ const TopPicks = () => {
           session?.data?.session?.token;
 
         const res = await fetch(
-          "http://localhost:5000/cars",
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/cars`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

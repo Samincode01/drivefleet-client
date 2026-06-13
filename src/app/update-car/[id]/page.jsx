@@ -15,7 +15,7 @@ const UpdateCarPage = () => {
     const getCar = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/cars/${id}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`
         );
 
         const data = await res.json();
@@ -51,7 +51,7 @@ const UpdateCarPage = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/cars/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${id}`,
         {
           method: "PATCH",
           headers: {

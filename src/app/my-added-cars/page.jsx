@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import AddedCarsCard from "@/app/components/AddedCarsCard/page";
+import AddedCarsCard from "@/components/AddedCarsCard/page";
 
 const MyAddedCarsPage = () => {
   const [cars, setCars] = useState([]);
@@ -16,7 +16,7 @@ const MyAddedCarsPage = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/my-added-cars/${session.user.email}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/my-added-cars/${session.user.email}`
         );
 
         const data = await res.json();

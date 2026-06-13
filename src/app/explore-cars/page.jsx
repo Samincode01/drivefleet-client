@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import CarCard from "@/app/components/CarCard";
+import CarCard from "@/components/CarCard";
 import { authClient } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 
@@ -32,7 +32,7 @@ const ExploreCarsPage = () => {
           session?.data?.session?.token;
 console.log("TOKEN:", token);
         const res = await fetch(
-          `http://localhost:5000/cars?${params.toString()}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/cars?${params.toString()}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -15,7 +15,7 @@ const AddedCarsCard = ({ car }) => {
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/cars/${car._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/cars/${car._id}`,
         {
           method: "DELETE",
         }

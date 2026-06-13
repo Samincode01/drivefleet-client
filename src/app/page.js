@@ -1,9 +1,9 @@
-import WhyChoose from "@/app/components/ChooseSection/ChooseSection";
-import Hero from "@/app/components/HeroSection/HeroSection";
-import Navbar from "@/app/components/NavBar";
-import CustomerReviews from "@/app/components/ReviewSection/ReviewSection";
+import WhyChoose from "@/components/ChooseSection/ChooseSection";
+import Hero from "@/components/HeroSection/HeroSection";
+import Navbar from "@/components/NavBar";
+import CustomerReviews from "@/components/ReviewSection/ReviewSection";
 import Image from "next/image";
-import TopPicks from "./components/TopPicks/TopPicks";
+import TopPicks from "../components/TopPicks/TopPicks";
 
 export default function Home() {
   return (

@@ -23,7 +23,7 @@ const MyBookingsPage = () => {
       async () => {
         try {
           const res = await fetch(
-            `http://localhost:5000/bookings/${session.user.email}`
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${session.user.email}`
           );
 
           const data =
@@ -44,7 +44,7 @@ const MyBookingsPage = () => {
     async (id) => {
       try {
         const res = await fetch(
-          `http://localhost:5000/bookings/${id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${id}`,
           {
             method: "DELETE",
           }
